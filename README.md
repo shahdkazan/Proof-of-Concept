@@ -1,140 +1,102 @@
-AgriVision – Plant Disease Detection System
+Here’s a clean, professional **README.md** for your GitHub Proof of Concept (PoC) project — no emojis, concise, and suitable for academic or research sharing:
 
-AgriVision is a proof-of-concept (PoC) deep learning system for tomato crop disease detection.
-It integrates a trained EfficientNetV2S model with a Tkinter-based GUI to provide offline disease diagnosis, Arabic support, and simple treatment guidance.
+---
 
-Project Overview
+# AgriVision – Proof of Concept (PoC)
 
-AgriVision demonstrates how lightweight AI can assist farmers in identifying tomato leaf diseases using offline image classification.
-The system outputs the detected disease name (in English and Arabic), a confidence score, possible causes, and recommended treatments.
+A Proof of Concept for **AgriVision**, a deep learning–based plant disease detection system using **EfficientNetV2S** and **TensorFlow Lite**.
+This PoC validates the feasibility of classifying tomato leaf diseases and demonstrates a lightweight GUI prototype for offline or mobile use.
 
-Features
+---
 
-Offline inference using a pre-trained EfficientNetV2S model
+## Overview
 
-Simple Tkinter graphical interface
+The PoC implements a minimal version of the AgriVision pipeline, focusing on:
 
-Disease details in both English and Arabic
+* Testing model performance on a small dataset.
+* Demonstrating the core workflow of disease classification.
+* Generating a deployable TensorFlow Lite model.
+* Providing a simple GUI interface for prediction.
 
-Three supported classes:
+---
 
-Tomato_Early_Blight
+## Dataset
 
-Tomato_Healthy
+Two public datasets were combined to form three tomato leaf classes:
 
-Tomato_Leaf_Miner
+| Dataset                                    | Source                                                               | Classes Used                            | Images per Class |
+| ------------------------------------------ | -------------------------------------------------------------------- | --------------------------------------- | ---------------- |
+| **PlantVillage Dataset**                   | [Kaggle](https://www.kaggle.com/datasets/arjuntejaswi/plant-village) | Tomato – Early Blight, Tomato – Healthy | 100 each         |
+| **Tomato Leaf Image Dataset (TLID/PTLID)** | [Mendeley](https://data.mendeley.com/datasets/kt64b2kh89/2)          | Tomato – Leaf Miner                     | 100              |
 
-Clear explanations of cause and suggested treatment
+All images were resized to **384×384** and normalized.
+The data were split into training, validation, and testing sets.
 
-Mobile-compatible model structure (TensorFlow Lite ready)
+---
 
-Dataset Information
+## Model Development
 
-AgriVision uses a combined dataset from two public sources to ensure variety and balance.
+* **Architecture:** EfficientNetV2S (pre-trained on ImageNet)
+* **Framework:** TensorFlow / Keras
+* **Training:** 12 epochs with early stopping and learning rate scheduling
+* **Augmentation:** Rotation, flipping, zooming, and shifting
+* **Optimizer:** Adam (learning rate = 1e-3)
+* **Loss Function:** Sparse categorical cross-entropy
 
-1. PlantVillage Dataset
+### Saved Models
 
-Source: Kaggle – PlantVillage Dataset
+* `POC3_EfficientNetV2S.h5` – trained model
+* `POC3_EfficientNetV2S.tflite` – converted TensorFlow Lite version for mobile deployment
 
-Classes Used: Tomato – Early Blight, Tomato – Healthy
 
-Description: Contains over 50,000 labeled images across several crop diseases, widely used for benchmarking.
+---
 
-2. Tomato Leaf Miner Dataset
+## Graphical User Interface (GUI)
 
-Source: Mendeley Data – Tomato Leaf Miner Dataset
+A lightweight GUI prototype was built using **Tkinter** to demonstrate user interaction.
 
-Classes Used: Tomato – Leaf Miner
+### Features
 
-Description: Real-world field images affected by Tuta absoluta (tomato leaf miner), captured under diverse conditions.
+* Upload a tomato leaf image for instant prediction
+* Display of:
 
-Dataset Structure
+  * Disease name (English and Arabic)
+  * Cause description
+  * Suggested treatment
+* Simple agriculture-inspired design
+
+
+---
+
+## Directory Structure
+
+```
 AgriVision_PoC/
 │
-├── Tomato_Healthy/
-├── Tomato_Early_Blight/
-└── Tomato_Leaf_Miner/
+├── poc_model.ipynb          # Model training and evaluation
+├── poc_app.py               # GUI interface
+├── POC3_EfficientNetV2S.h5  # Saved Keras model
+├── POC3_EfficientNetV2S.tflite # Converted TensorFlow Lite model
+└── README.md
+```
 
-Model Training
+---
 
-The model training script builds and trains an EfficientNetV2S-based classifier on the dataset.
+## Results
 
-Training Workflow
+* The PoC successfully demonstrated the feasibility of deep learning–based disease detection.
+* The model achieved high accuracy on the test subset despite limited data.
+* The TFLite model ensures readiness for future mobile and offline deployment.
 
-Load and preprocess images (resize to 384×384, normalize, encode labels).
+---
 
-Split data into train, validation, and test sets.
+## Future Work
 
-Apply data augmentation (rotation, shifting, flipping, zooming).
+* Extend to additional crops and diseases.
+* Integrate into a mobile application with TensorFlow Lite.
+* Incorporate weather and location-based advisory features.
+* Enhance dataset diversity for improved generalization.
 
-Fine-tune a pre-trained EfficientNetV2S base model.
+---
 
-Train with early stopping and learning rate reduction.
 
-Evaluate and save the best model.
-
-Model Architecture
-EfficientNetV2S (pretrained, frozen base)
- → GlobalAveragePooling2D
- → Dropout(0.3)
- → Dense(512, relu)
- → Dropout(0.3)
- → Dense(num_classes, softmax)
-
-Training Parameters
-Parameter	Value
-Optimizer	Adam (lr=1e-3)
-Loss	Sparse categorical crossentropy
-Batch Size	32
-Epochs	12
-Callbacks	EarlyStopping, ReduceLROnPlateau
-Output
-
-The trained model is saved as:
-
-POC3_EfficientNetV2S.h5
-
-Evaluation Results
-
-Typical results on validation and test data:
-
-Metric	Value
-Accuracy	96–98%
-Precision	96%
-Recall	97%
-F1-Score	96–97%
-
-Generated plots:
-
-Accuracy and loss curves
-
-Confusion matrix heatmap
-
-Classification report by class
-
-GUI Application
-
-A Tkinter-based GUI named AgriVision provides an intuitive interface for image classification.
-
-Features
-
-Upload and classify tomato leaf images
-
-Displays:
-
-Disease prediction (English and Arabic)
-
-Confidence percentage
-
-Simple cause and treatment message
-
-Offline operation using the saved .h5 model
-
-Agriculture-themed color palette
-
-### Dataset Structure
-The datasets are organized in the following structure for training:
-AgriVision_PoC/
-├── Tomato_Healthy/
-├── Tomato_Early_Blight/
-└── Tomato_Leaf_Miner/
