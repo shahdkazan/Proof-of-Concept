@@ -1,6 +1,3 @@
-Here’s a clean, professional **README.md** for your GitHub Proof of Concept (PoC) project — no emojis, concise, and suitable for academic or research sharing:
-
----
 
 # AgriVision – Proof of Concept (PoC)
 
